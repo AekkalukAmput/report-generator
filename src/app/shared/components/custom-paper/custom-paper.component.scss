@@ -1,0 +1,71 @@
+.paper {
+    position: relative;
+    padding-bottom: 1px;
+    width: var(--page-w, 210mm);
+    height: var(--page-h, 297mm);
+    &.paper--scroll {
+        overflow: auto;
+    }
+    &.paper--clip {
+        overflow: hidden;
+    }
+}
+.paper-content {
+  position: relative;
+  height: 100%;
+  padding: var(--inset, 0mm);
+  box-sizing: border-box;
+}
+.page-frame {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* ตั้งค่าเริ่มต้น (เผื่อไม่ได้ส่ง CSS var มาด้วย) */
+    --page-w: 210mm; /* A4 กว้าง */
+    --page-h: 297mm; /* A4 สูง   */
+    --inset: 0mm; /* margin ด้านในที่ต้องการให้กรอบอยู่ห่างจากขอบ */
+    --bw: 1px; /* ความหนาเส้นกรอบ */
+}
+
+.page-frame::before {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    width: var(--page-w);
+    top: var(--inset);
+    left: var(--inset);
+    right: var(--inset);
+    bottom: var(--inset);
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            currentColor 0,
+            currentColor var(--bw),
+            transparent var(--bw),
+            transparent var(--page-h)
+        ),
+        repeating-linear-gradient(
+            to right,
+            currentColor 0,
+            currentColor var(--bw),
+            transparent var(--bw),
+            transparent var(--page-w)
+        ),
+        repeating-linear-gradient(
+            to left,
+            currentColor 0,
+            currentColor var(--bw),
+            transparent var(--bw),
+            transparent var(--page-w)
+        );
+    color: #000; /* สีเส้นกรอบ */
+}
+@media print {
+    .page-frame {
+        display: none;
+    }
+    @page {
+        size: A4;
+        margin: 0;
+    }
+}

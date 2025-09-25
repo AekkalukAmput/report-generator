@@ -1,0 +1,9 @@
+<div class="paper paper--scroll" [style.--page-w]="pageWidth"
+    [style.--page-h]="pageHeight"
+    [style.--inset]="pageInset">
+    <div class="paper-content" #elRef [ngStyle]="paperStyle">
+        <ng-content></ng-content>
+    </div>
+    <!-- กรอบเฉพาะ HTML -->
+    <div class="page-frame" aria-hidden="true" data-html2canvas-ignore="true"></div>
+</div>

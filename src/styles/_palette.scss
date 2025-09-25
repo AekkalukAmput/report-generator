@@ -1,0 +1,54 @@
+// ============================
+// 🎨 Color Palette
+// ============================
+
+// 🌈 Primary
+$color-primary: #1976d2;
+$color-primary-light: #63a4ff;
+$color-primary-dark: #004ba0;
+
+// 🟢 Success
+$color-success: #2e7d32;
+$color-success-light: #60ad5e;
+$color-success-dark: #005005;
+
+// 🔴 Error
+$color-error: #d32f2f;
+$color-error-light: #ff6659;
+$color-error-dark: #9a0007;
+
+// 🟠 Warning
+$color-warning: #ed6c02;
+$color-warning-light: #ff9d3f;
+$color-warning-dark: #b53d00;
+
+// 🔵 Info
+$color-info: #0288d1;
+$color-info-light: #5eb8ff;
+$color-info-dark: #005b9f;
+
+// ⚫ Neutral / Gray scale
+$color-black: #000000;
+$color-dark: #212121;
+$color-medium: #757575;
+$color-light: #e0e0e0;
+$color-white: #ffffff;
+
+// ============================
+// 🧩 Helper maps
+// ============================
+
+$theme-colors: (
+    primary: $color-primary,
+    success: $color-success,
+    error: $color-error,
+    warning: $color-warning,
+    info: $color-info,
+    dark: $color-dark,
+    light: $color-light
+);
+
+// Function ดึงสีตาม key
+@function theme-color($key) {
+    @return map-get($theme-colors, $key);
+}

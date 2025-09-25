@@ -1,0 +1,9 @@
+<nav class="menu-bar">
+    @for (item of listMenu; track $index) {
+        <a class="menu-bar-item" [ngClass]="{'active': checkActive(item.path)}" (click)="navigateTo(item.path)">{{item.name}}</a>
+    }
+</nav>
+
+<main style="padding:16px">
+    <router-outlet></router-outlet>
+</main>

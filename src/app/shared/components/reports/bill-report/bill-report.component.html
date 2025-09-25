@@ -1,0 +1,102 @@
+<custom-paper #billReport>
+    <section class="sheet">
+        <div class="sheet__inner">
+            <div class="top-cols">
+                <div class="addr">
+                    <h3>YOUR COMPANY</h3>
+                    <p>12 Example Avenue</p>
+                    <p>Pontefract</p>
+                    <p>WF8 4LS</p>
+                    <p>hello&#64;mac.com</p>
+                    <p>0712345678</p>
+                </div>
+                <div>
+                    <div class="brand-logo">LOGO</div>
+                </div>
+            </div>
+
+            <div class="mid-cols">
+                <div class="addr">
+                    <h3>BILL TO</h3>
+                    <p class="muted">Client Name</p>
+                    <p>12 Example Avenue</p>
+                    <p>City</p>
+                    <p>AB1 2CD</p>
+                </div>
+
+                <div class="meta">
+                    <h3>INVOICE</h3>
+                    <table>
+                        <tr>
+                            <td>Invoice No:</td>
+                            <td class="val">{{genInvoiceNo}}</td>
+                        </tr>
+                        <tr>
+                            <td>Issue Date:</td>
+                            <td class="val">{{formatDate("2025-01-01")}}</td>
+                        </tr>
+                        <tr>
+                            <td>Due Date:</td>
+                            <td class="val">{{formatDate("2025-01-15")}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <table class="items">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th class="qty">Quantity</th>
+                        <th class="num">Unit Price</th>
+                        <th class="num">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of productList; track $index) {
+                    <tr>
+                        <td>{{item.description}}</td>
+                        <td class="qty">{{item.quantity}}</td>
+                        <td class="num">{{item.unitPrice | number:'1.2-2'}}</td>
+                        <td class="num">{{(item.quantity * item.unitPrice) | number:'1.2-2'}}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="totals">
+                <div class="row">
+                    <div class="label">Subtotal</div>
+                    <div>{{ subTotal | number:'1.2-2' }}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Discount ({{discount * 100}}%)</div>
+                    <div>{{ discountAmount | number:'1.2-2' }}</div>
+                </div>
+                <div class="row">
+                    <div class="label">VAT ({{(vat * 100).toFixed(0)}}%)</div>
+                    <div>{{ vatAmount | number:'1.2-2' }}</div>
+                </div>
+                <div class="row total">
+                    <div>Total</div>
+                    <div>{{ total | number:'1.2-2' }}</div>
+                </div>
+            </div>
+
+            <div class="footer-cols">
+                <div>
+                    <h3>PAY BY BANK TRANSFER</h3>
+                    <p>Bank/Sort Code: 123456</p>
+                    <p>Account Number: 12345678</p>
+                    <p>Payment Reference: Customer 001</p>
+                    <p>Bank Name</p>
+                </div>
+                <div>
+                    <h3>TERMS</h3>
+                    <p>&lt;Add payment instructions here&gt;</p>
+                    <p>&lt;Add terms here, e.g: warranty, returns policy…&gt;</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</custom-paper>
