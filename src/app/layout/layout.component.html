@@ -1,9 +1,19 @@
 <nav class="menu-bar">
+  <div class="main-menu">
     @for (item of listMenu; track $index) {
-        <a class="menu-bar-item" [ngClass]="{'active': checkActive(item.path)}" (click)="navigateTo(item.path)">{{item.name}}</a>
+    <a
+      class="menu-bar-item"
+      [ngClass]="{ active: checkActive(item.path) }"
+      (click)="navigateTo(item.path)"
+      >{{ item.name }}</a
+    >
     }
+  </div>
+  <div class="right-menu">
+    <a class="logout" (click)="onLogout()">Logout</a>
+  </div>
 </nav>
 
-<main style="padding:16px">
-    <router-outlet></router-outlet>
+<main style="padding: 16px">
+  <router-outlet></router-outlet>
 </main>

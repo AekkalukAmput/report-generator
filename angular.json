@@ -17,6 +17,15 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "html2canvas",
+              "jspdf",
+              "lodash",
+              "dayjs",
+              "core-js",
+              "raf",
+              "rgbcolor"
+            ],
             "outputPath": "dist/report-generator",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -62,6 +71,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "local": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -74,9 +94,13 @@
             },
             "development": {
               "buildTarget": "report-generator:build:development"
+            },
+            "local": {
+              "buildTarget": "report-generator:build:local",
+              "proxyConfig": "src/proxy.conf.mjs"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"

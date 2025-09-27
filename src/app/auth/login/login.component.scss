@@ -1,0 +1,58 @@
+@use "styles/palette" as palette;
+
+.content-login {
+    padding: 20px;
+    background: linear-gradient(225deg, palette.$color-spinel-red, palette.$color-sailing-tangerine);
+    height: -webkit-fill-available;
+}
+
+.login-card {
+    display: flex;
+    flex-direction: column;
+    margin: 200px auto;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #fff;
+
+    .login-title {
+        color: palette.$color-fuchsia-fever;
+        text-align: center;
+        padding: 20px;
+        font-size: 36px;
+        font-weight: 600;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .email-field, .password-field {
+        width: 100%;
+
+        input {
+            color: #000;
+        }
+    }
+
+    .sign-in-btn {
+        margin-top: 10px;
+        background-color: palette.$color-hipster-salmon;
+        color: #fff;
+        font-weight: 600;
+        &:hover {
+            background-color: palette.$color-fuchsia-fever;
+        }
+    }
+
+    .create-account-btn {
+        margin-top: 10px;
+        color: palette.$color-hipster-salmon;
+        font-weight: 600;
+        &:hover {
+            color: palette.$color-fuchsia-fever;
+            background-color: none;
+        }
+    }
+}
+
+.form-error {
+    color: #d32f2f;
+    padding: 15px 10px;
+}

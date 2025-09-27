@@ -1,0 +1,55 @@
+<div class="content-login" [formGroup]="form">
+  <mat-card class="login-card">
+    <span class="login-title">Sign In</span>
+    <mat-form-field class="email-field" appearance="outline">
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        placeholder="email"
+        formControlName="email"
+        (keydown.enter)="submit()"
+      />
+      @if (form.controls.email.touched && form.controls.email.invalid) {
+      <mat-error
+        >{{ form.controls.email.errors?.['required'] ? 'กรุณากรอกอีเมล' : form.controls.email.errors?.['email'] ? 'รูปแบบอีเมลไม่ถูกต้อง' : form.controls.email.errors?.['api'] ? form.controls.email.errors?.['api'] : '' }}</mat-error
+      >
+      }
+    </mat-form-field>
+
+    <mat-form-field class="password-field" appearance="outline">
+      <mat-icon
+        style="cursor: pointer"
+        matSuffix
+        (click)="togglePasswordVisibility()"
+        >{{ passwordVisible ? "visibility" : "visibility_off" }}</mat-icon
+      >
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="passwordVisible ? 'text' : 'password'"
+        placeholder="Password"
+        formControlName="password"
+        (keydown.enter)="submit()"
+      />
+      @if (form.controls.password.touched && form.controls.password.invalid) {
+      <mat-error
+        >{{ form.controls.password.errors?.['required'] ? 'กรุณากรอกรหัสผ่าน' : form.controls.password.errors?.['minlength'] ? 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร' : form.controls.password.errors?.['api'] ? form.controls.password.errors?.['api'] : '' }}</mat-error
+      >
+      }
+    </mat-form-field>
+    <div class="form-error" *ngIf="errorMsg">
+      {{ errorMsg }}
+    </div>
+    <button class="sign-in-btn" mat-raised-button (click)="submit()">
+      Sign In
+    </button>
+    <button
+      class="create-account-btn"
+      mat-button
+      (click)="navigateToCreateAccount()"
+    >
+      Create account
+    </button>
+  </mat-card>
+</div>
