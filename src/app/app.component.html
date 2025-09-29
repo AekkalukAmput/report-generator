@@ -1,7 +1,8 @@
-<ng-container *ngIf="(loggedIn$ | async) === true && !isJwtExpired; else showLogin">
+<ng-container
+  *ngIf="(loggedIn$ | async) === true && !isJwtExpired; else showLogin"
+>
   <app-layout></app-layout>
 </ng-container>
-
 <ng-template #showLogin>
   <router-outlet></router-outlet>
 </ng-template>

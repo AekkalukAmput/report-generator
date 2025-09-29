@@ -1,0 +1,177 @@
+@use "styles/palette" as palette;
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+.calendar {
+    background: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.panel {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 12px;
+}
+.form label {
+    display: grid;
+    gap: 6px;
+    margin: 8px 0;
+    font-size: 14px;
+}
+.form input,
+.form select,
+.form textarea {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: #1976d2;
+    color: #fff;
+    cursor: pointer;
+}
+button.danger {
+    background: #c62828;
+}
+button:hover {
+    opacity: 0.95;
+}
+
+.edit-card {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+
+    .mat-card-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .flex {
+        display: flex;
+        gap: 10px;
+
+        .radio-card {
+            flex: 1;
+            display: inline-block;
+            position: relative;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin: 15px 0px;
+
+            label {
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: #fff;
+                border-radius: 5px;
+                text-align: center;
+                width: -webkit-fill-available;
+                height: -webkit-fill-available;
+                line-height: 38px;
+                box-shadow: 0 0 5px 1px palette.$color-medium;
+                &.income {
+                    color: palette.$color-dark-green;
+                    border: 1px solid palette.$color-dark-green;
+                }
+                &.expense {
+                    color: palette.$color-error-dark;
+                    border: 1px solid palette.$color-error-dark;
+                }
+                &:after {
+                    content: "";
+                    position: absolute;
+                    display: none;
+                }
+            }
+            &:hover input ~ label.income {
+                background-color: palette.$color-dark-green;
+                color: #fff;
+            }
+            input:checked ~ label.income {
+                background-color: palette.$color-dark-green;
+                color: #fff;
+            }
+            &:hover input ~ label.expense {
+                background-color: palette.$color-error-dark;
+                color: #fff;
+            }
+            input:checked ~ label.expense {
+                background-color: palette.$color-error-dark;
+                color: #fff;
+            }
+            input:checked ~ label:after {
+                display: block;
+            }
+        }
+
+        .mat-mdc-form-field {
+            flex: 1;
+        }
+
+        input[currency] {
+            text-align: right;
+        }
+
+        .prefix-amount {
+            font-size: 18px;
+            color: #fff;
+        }
+    }
+
+    .action-buttons {
+        padding: 0 16px;
+
+        button {
+            margin-right: 8px;
+            padding: 10px 12px;
+            font-size: 16px;
+            width: 80px;
+
+            &:hover {
+                box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+            }
+
+            &.btn-edit {
+                background-color: palette.$color-primary;
+            }
+            &.btn-cancel {
+                color: palette.$color-medium;
+                background-color: #fff;
+                border: 1px solid palette.$color-medium;
+            }
+            &.btn-delete {
+                background-color: palette.$color-error;
+            }
+        }
+    }
+}
+@media (max-width: 900px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+    }
+}

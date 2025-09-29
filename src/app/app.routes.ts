@@ -16,7 +16,7 @@ export const routes: Routes = [
     children: [
       { path: PATH.HOME, component: HomeComponent, title: 'Home' },
       { path: PATH.REPORTS, component: ReportsComponent, title: 'Report' },
-      { path: PATH.EXPENSE, component: ExpenseComponent, title: 'Expense' },
+      { path: PATH.EXPENSE, loadComponent: () => import('./features/expense/expense.component').then(m => m.ExpenseComponent), title: 'Expense' },
       { path: '**', redirectTo: '', pathMatch: 'full' },
     ],
   },

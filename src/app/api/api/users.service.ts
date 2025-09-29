@@ -87,7 +87,7 @@ export class UsersApi extends BaseService {
             }
         }
 
-        let localVarPath = `/users/me/password`;
+        let localVarPath = `/api/users/me/password`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('patch', `${basePath}${localVarPath}`,
             {
@@ -140,7 +140,7 @@ export class UsersApi extends BaseService {
             }
         }
 
-        let localVarPath = `/users/me`;
+        let localVarPath = `/api/users/me`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('delete', `${basePath}${localVarPath}`,
             {
@@ -192,7 +192,7 @@ export class UsersApi extends BaseService {
             }
         }
 
-        let localVarPath = `/users/me`;
+        let localVarPath = `/api/users/me`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('get', `${basePath}${localVarPath}`,
             {
@@ -257,7 +257,7 @@ export class UsersApi extends BaseService {
             }
         }
 
-        let localVarPath = `/users/me/email`;
+        let localVarPath = `/api/users/me/email`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('patch', `${basePath}${localVarPath}`,
             {

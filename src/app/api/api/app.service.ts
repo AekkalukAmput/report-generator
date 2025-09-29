@@ -66,7 +66,7 @@ export class AppApi extends BaseService {
             }
         }
 
-        let localVarPath = `/`;
+        let localVarPath = `/api`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('get', `${basePath}${localVarPath}`,
             {
