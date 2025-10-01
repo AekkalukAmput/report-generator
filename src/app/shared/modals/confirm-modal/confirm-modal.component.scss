@@ -1,5 +1,9 @@
 @use "styles/palette" as palette;
 
+* {
+    font-family: "NotoSansThai-Regular", sans-serif !important;
+}
+
 .confirm-modal {
     background-color: #fff;
     border-radius: 8px;

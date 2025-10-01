@@ -58,7 +58,17 @@
             [format]="24"
             formControlName="time"
           />
-          <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+          <ngx-material-timepicker
+            #fullTime
+            [cancelBtnTmpl]="customCancelButton"
+            [confirmBtnTmpl]="customConfirmButton"
+          ></ngx-material-timepicker>
+          <ng-template #customCancelButton>
+            <button class="time-btn cancel">ยกเลิก</button>
+          </ng-template>
+          <ng-template #customConfirmButton>
+            <button class="time-btn confirm">ตั้งเวลา</button>
+          </ng-template>
           <mat-icon matSuffix [ngxTimepicker]="fullTime">access_time</mat-icon>
         </mat-form-field>
       </div>

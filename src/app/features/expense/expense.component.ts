@@ -67,7 +67,7 @@ export class ExpenseComponent {
     time: [formatDateToString(new Date(), 'HH:mm'), Validators.required],
     type: ['expense', Validators.required],
     amount: [0, [Validators.required, Validators.min(0.01)]],
-    category: [''],
+    category: ['', Validators.required],
     note: [''],
   });
 
@@ -113,7 +113,7 @@ export class ExpenseComponent {
 
   ngOnInit() {
     this.getExpenses();
-    this.onTypeChange();
+    this.onTypeChange(true);
   }
 
   getExpenses() {
@@ -169,7 +169,7 @@ export class ExpenseComponent {
       note: ext.note || '',
     });
     this.showForm.set(true);
-    this.onTypeChange();
+    this.onTypeChange(true);
   }
 
   groupCategoriesForSelect(data: any[], { type = 'EXPENSE' } = {}) {
@@ -213,9 +213,10 @@ export class ExpenseComponent {
     });
   }
 
-  onTypeChange() {
+  onTypeChange(isInit = false) {
     const type = this.form.get('type')?.value;
     if (type) {
+      if (!isInit) this.form.get('category')?.patchValue('');
       this.categoriesApi
         .categoriesControllerList(type as 'income' | 'expense')
         .subscribe({

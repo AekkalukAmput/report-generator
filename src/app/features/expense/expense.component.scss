@@ -92,7 +92,7 @@ button:hover {
                 text-align: center;
                 width: -webkit-fill-available;
                 height: -webkit-fill-available;
-                line-height: 38px;
+                line-height: 45px;
                 box-shadow: 0 0 5px 1px palette.$color-medium;
                 &.income {
                     color: palette.$color-dark-green;
@@ -170,6 +170,27 @@ button:hover {
         }
     }
 }
+
+.time-btn {
+    margin-right: 8px;
+    padding: 10px 12px;
+    font-size: 16px;
+    width: 80px;
+
+    &:hover {
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+    }
+
+    &.confirm {
+        background-color: palette.$color-primary;
+    }
+    &.cancel {
+        color: palette.$color-medium;
+        background-color: #fff;
+        border: 1px solid palette.$color-medium;
+    }
+}
+
 @media (max-width: 900px) {
     .wrapper {
         grid-template-columns: 1fr;
