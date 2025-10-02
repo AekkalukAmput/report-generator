@@ -6,6 +6,7 @@ api/api.ts
 api/app.service.ts
 api/auth.service.ts
 api/categories.service.ts
+api/documents.service.ts
 api/expense.service.ts
 api/users.service.ts
 configuration.ts
@@ -14,13 +15,11 @@ git_push.sh
 index.ts
 model/change-password-dto.ts
 model/create-category-dto.ts
-model/create-expense-dto.ts
 model/login-dto.ts
 model/models.ts
 model/register-dto.ts
 model/update-category-dto.ts
 model/update-email-dto.ts
-model/update-expense-dto.ts
 param.ts
 provide-api.ts
 variables.ts

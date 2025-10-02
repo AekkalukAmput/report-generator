@@ -16,10 +16,6 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-// @ts-ignore
-import { CreateExpenseDto } from '../model/create-expense-dto';
-// @ts-ignore
-import { UpdateExpenseDto } from '../model/update-expense-dto';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -38,17 +34,19 @@ export class ExpenseApi extends BaseService {
     }
 
     /**
-     * Create expense event
-     * @param createExpenseDto 
+     * Create expense event (with optional files)
+     * @param data JSON string of CreateExpenseDto
+     * @param docType 
+     * @param files 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createExpenseEvent(createExpenseDto: CreateExpenseDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public createExpenseEvent(createExpenseDto: CreateExpenseDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public createExpenseEvent(createExpenseDto: CreateExpenseDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public createExpenseEvent(createExpenseDto: CreateExpenseDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
-        if (createExpenseDto === null || createExpenseDto === undefined) {
-            throw new Error('Required parameter createExpenseDto was null or undefined when calling createExpenseEvent.');
+    public createExpenseEvent(data: string, docType?: string, files?: Array<Blob>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public createExpenseEvent(data: string, docType?: string, files?: Array<Blob>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public createExpenseEvent(data: string, docType?: string, files?: Array<Blob>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public createExpenseEvent(data: string, docType?: string, files?: Array<Blob>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (data === null || data === undefined) {
+            throw new Error('Required parameter data was null or undefined when calling createExpenseEvent.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -66,14 +64,39 @@ export class ExpenseApi extends BaseService {
 
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
-
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
+            'multipart/form-data'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let localVarFormParams: { append(param: string, value: any): any; };
+        let localVarUseForm = false;
+        let localVarConvertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        localVarUseForm = canConsumeForm;
+        if (localVarUseForm) {
+            localVarFormParams = new FormData();
+        } else {
+            localVarFormParams = new HttpParams({encoder: this.encoder});
+        }
+
+        if (data !== undefined) {
+            localVarFormParams = localVarFormParams.append('data', <any>data) as any || localVarFormParams;
+        }
+        if (docType !== undefined) {
+            localVarFormParams = localVarFormParams.append('docType', <any>docType) as any || localVarFormParams;
+        }
+        if (files) {
+            if (localVarUseForm) {
+                files.forEach((element) => {
+                    localVarFormParams = localVarFormParams.append('files', <any>element) as any || localVarFormParams;
+            })
+            } else {
+                localVarFormParams = localVarFormParams.append('files', [...files].join(COLLECTION_FORMATS['csv'])) as any || localVarFormParams;
+            }
         }
 
         let responseType_: 'text' | 'json' | 'blob' = 'json';
@@ -92,7 +115,7 @@ export class ExpenseApi extends BaseService {
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: createExpenseDto,
+                body: localVarConvertFormParamsToString ? localVarFormParams.toString() : localVarFormParams,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -341,21 +364,24 @@ export class ExpenseApi extends BaseService {
     }
 
     /**
-     * Update expense event
+     * Update expense event (with optional files)
      * @param id 
-     * @param updateExpenseDto 
+     * @param data JSON string of UpdateExpenseDto
+     * @param docType 
+     * @param replaceFiles ถ้า true จะลบไฟล์เดิมทั้งหมดก่อนอัปใหม่
+     * @param files 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateExpenseEvent(id: string, updateExpenseDto: UpdateExpenseDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public updateExpenseEvent(id: string, updateExpenseDto: UpdateExpenseDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public updateExpenseEvent(id: string, updateExpenseDto: UpdateExpenseDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public updateExpenseEvent(id: string, updateExpenseDto: UpdateExpenseDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public updateExpenseEvent(id: string, data: string, docType?: string, replaceFiles?: boolean, files?: Array<Blob>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any>;
+    public updateExpenseEvent(id: string, data: string, docType?: string, replaceFiles?: boolean, files?: Array<Blob>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
+    public updateExpenseEvent(id: string, data: string, docType?: string, replaceFiles?: boolean, files?: Array<Blob>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
+    public updateExpenseEvent(id: string, data: string, docType?: string, replaceFiles?: boolean, files?: Array<Blob>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling updateExpenseEvent.');
         }
-        if (updateExpenseDto === null || updateExpenseDto === undefined) {
-            throw new Error('Required parameter updateExpenseDto was null or undefined when calling updateExpenseEvent.');
+        if (data === null || data === undefined) {
+            throw new Error('Required parameter data was null or undefined when calling updateExpenseEvent.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -373,14 +399,42 @@ export class ExpenseApi extends BaseService {
 
         const localVarTransferCache: boolean = options?.transferCache ?? true;
 
-
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
+            'multipart/form-data'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let localVarFormParams: { append(param: string, value: any): any; };
+        let localVarUseForm = false;
+        let localVarConvertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        localVarUseForm = canConsumeForm;
+        if (localVarUseForm) {
+            localVarFormParams = new FormData();
+        } else {
+            localVarFormParams = new HttpParams({encoder: this.encoder});
+        }
+
+        if (data !== undefined) {
+            localVarFormParams = localVarFormParams.append('data', <any>data) as any || localVarFormParams;
+        }
+        if (docType !== undefined) {
+            localVarFormParams = localVarFormParams.append('docType', <any>docType) as any || localVarFormParams;
+        }
+        if (replaceFiles !== undefined) {
+            localVarFormParams = localVarFormParams.append('replaceFiles', <any>replaceFiles) as any || localVarFormParams;
+        }
+        if (files) {
+            if (localVarUseForm) {
+                files.forEach((element) => {
+                    localVarFormParams = localVarFormParams.append('files', <any>element) as any || localVarFormParams;
+            })
+            } else {
+                localVarFormParams = localVarFormParams.append('files', [...files].join(COLLECTION_FORMATS['csv'])) as any || localVarFormParams;
+            }
         }
 
         let responseType_: 'text' | 'json' | 'blob' = 'json';
@@ -399,7 +453,7 @@ export class ExpenseApi extends BaseService {
         return this.httpClient.request<any>('patch', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: updateExpenseDto,
+                body: localVarConvertFormParamsToString ? localVarFormParams.toString() : localVarFormParams,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

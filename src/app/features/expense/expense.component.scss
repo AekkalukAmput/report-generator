@@ -68,6 +68,7 @@ button:hover {
     .flex {
         display: flex;
         gap: 10px;
+        margin-bottom: 10px;
 
         .radio-card {
             flex: 1;
@@ -168,6 +169,19 @@ button:hover {
                 background-color: palette.$color-error;
             }
         }
+    }
+    .flex-header-items {
+        display: flex;
+        justify-content: space-between;
+    }
+    .add-items-btn {
+        padding: 10px 10px 3px 10px;
+        background-color: palette.$color-success;
+    }
+    .delete-items-btn {
+        padding: 0px 10px 0px 10px;
+        margin: 5px 0px 5px 0px;
+        background-color: palette.$color-error;
     }
 }
 

@@ -41,9 +41,9 @@ export class AuthService {
   }
 
   logout() {
+    this.storage.clear();
     const req$ = this.authApi.authControllerLogout();
     return req$.pipe(
-      tap(() => this.storage.clear()),
       tap(() => this.loggedIn$.next(false)),
       tap(() => this.me$.next(null))
     );

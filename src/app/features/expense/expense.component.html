@@ -39,8 +39,12 @@
       </div>
       <div class="flex">
         <mat-form-field>
-          <mat-label>วันที่</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="date" />
+          <mat-label>วันที่เริ่มโครงการ</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="startProjectDate"
+          />
           <mat-datepicker-toggle
             matIconSuffix
             [for]="picker"
@@ -87,7 +91,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>จำนวนเงิน (บาท)</mat-label>
+          <mat-label>ค่าประเมินโครงการ (บาท)</mat-label>
           <input
             matInput
             type="text"
@@ -103,10 +107,142 @@
       </div>
       <div class="flex">
         <mat-form-field>
+          <mat-label>ประเภทลูกค้า</mat-label>
+          <mat-select formControlName="customerType">
+            <mat-option
+              *ngFor="let item of customerTypeDdl"
+              [value]="item.value"
+            >
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>รหัสโครงการ</mat-label>
+          <input matInput type="text" formControlName="orderNo" />
+        </mat-form-field>
+      </div>
+      <div class="flex">
+        <mat-form-field>
+          <mat-label>ชื่อเว็บไซต์</mat-label>
+          <input matInput type="text" formControlName="websiteName" />
+        </mat-form-field>
+      </div>
+      <div class="flex">
+        <mat-form-field>
+          <mat-label>ที่อยู่</mat-label>
+          <textarea matInput formControlName="address" rows="1"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>เบอร์โทร</mat-label>
+          <input matInput type="tel" formControlName="telNo" />
+        </mat-form-field>
+      </div>
+      <div class="flex">
+        <mat-form-field>
+          <mat-label>อัตราภาษีหัก ณ ที่จ่าย (%)</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="withholdingTaxPercent"
+            min="0"
+            max="100"
+            numbersOnly
+            currency
+            [allowDecimals]="true"
+          />
+          <span class="prefix-amount" matTextSuffix>&nbsp;%</span>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>ภาษีหัก ณ ที่จ่าย (บาท)</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="withholdingTaxAmount"
+            min="0"
+            step="0.01"
+            numbersOnly
+            currency
+            [allowDecimals]="true"
+          />
+          <span class="prefix-amount" matTextPrefix>฿&nbsp;</span>
+        </mat-form-field>
+      </div>
+      <div class="flex">
+        <mat-form-field>
+          <mat-label>อัตราค่าธรรมเนียมบริการ (%)</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="withholdingTaxPercent"
+            min="0"
+            max="100"
+            numbersOnly
+            currency
+            [allowDecimals]="true"
+          />
+          <span class="prefix-amount" matTextSuffix>&nbsp;%</span>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>ค่าธรรมเนียมบริการ (บาท)</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="withholdingTaxAmount"
+            min="0"
+            step="0.01"
+            numbersOnly
+            currency
+            [allowDecimals]="true"
+          />
+          <span class="prefix-amount" matTextPrefix>฿&nbsp;</span>
+        </mat-form-field>
+      </div>
+      <div class="flex">
+        <mat-form-field>
           <mat-label>หมายเหตุ</mat-label>
           <textarea matInput formControlName="note" rows="5"></textarea>
         </mat-form-field>
       </div>
+      <div class="flex-header-items">
+        <div>
+          <span>รายการค่าใช้จ่าย</span>
+        </div>
+        <div>
+          <button class="add-items-btn" (click)="onAddExpenseItems()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <ng-container formArrayName="expenseItems">
+        <ng-container
+          *ngFor="let item of expenseItemArr.controls; let i = index"
+        >
+          <div class="flex" [formGroupName]="i">
+            <mat-form-field>
+              <mat-label>ชื่อค่าใช้จ่าย</mat-label>
+              <input matInput type="text" formControlName="name" />
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>จำนวนค่าใช้จ่าย (บาท)</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="amount"
+                min="0"
+                step="0.01"
+                numbersOnly
+                currency
+                [allowDecimals]="true"
+              />
+              <span class="prefix-amount" matTextPrefix>฿&nbsp;</span>
+            </mat-form-field>
+            <button class="delete-items-btn" (click)="onDeleteExpenseItems(i)">
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </ng-container>
     </mat-card-content>
     <mat-card-actions class="action-buttons">
       <button class="btn-edit" type="button" (click)="submitForm()">
